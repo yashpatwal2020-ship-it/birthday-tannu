@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Tannu 💗</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to bottom, #ff4e8a, #ff9a9e);
+    color: white;
+    text-align: center;
+    overflow-x: hidden;
+}
+
+#blur-bg {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(to bottom, #ff4e8a, #ff9a9e);
+    filter: blur(22px);
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    z-index: -1;
+}
+body.blur-active #blur-bg { opacity: 1; }
+
+nav {
+    background: rgba(255,255,255,0.25);
+    padding: 15px;
+    position: sticky;
+    top: 0;
+}
+
+nav a {
+    color: white;
+    font-size: 18px;
+    margin: 0 15px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+section { display: none; padding: 40px 20px; }
+section.active { display: block; }
+
+h1 { font-size: 42px; }
+
+#typing {
+    font-size: 20px;
+    width: 80%;
+    margin: 30px auto;
+    line-height: 1.8;
+    background: rgba(255,255,255,0.2);
+    padding: 25px;
+    border-radius: 15px;
+}
+
+button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    background: white;
+    color: #ff4e8a;
+    cursor: pointer;
+    margin: 6px;
+}
+
+/* Falling items */
+.fall {
+    position: fixed;
+    top: -40px;
+    animation: fall 8s linear infinite;
+}
+@keyframes fall {
+    to { transform: translateY(100vh); opacity: 0; }
+}
+
+/* Slideshow */
+.slideshow {
+    max-width: 420px;
+    margin: 30px auto;
+    background: rgba(255,255,255,0.35);
+    padding: 14px;
+    border-radius: 22px;
+    backdrop-filter: blur(10px);
+}
+
+.slideshow img {
+    width: 100%;
+    border-radius: 16px;
+    transition: opacity 1s ease;
+    cursor: pointer;
+}
+
+/* Memories */
+.memory-box {
+    max-width: 850px;
+    margin: auto;
+    background: rgba(255,255,255,0.2);
+    padding: 30px;
+    border-radius: 20px;
+    text-align: left;
+    line-height: 1.9;
+}
+
+.memory-box p {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.8s ease forwards;
+}
+@keyframes fadeIn {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Lightbox */
+#lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+}
+#lightbox img {
+    max-width: 90%;
+    max-height: 90%;
+    margin-top: 5%;
+}
+</style>
+</head>
+
+<body>
+
+<div id="blur-bg"></div>
+
+<nav>
+    <a onclick="showSection('home')">Home 💗</a>
+    <a onclick="showSection('photos')">Photos 📸</a>
+    <a onclick="showSection('memories')">Memories 💭</a>
+</nav>
+
+<section id="home" class="active">
+    <h1>🎂 Happy Birthday Tannu 💗</h1>
+    <div id="typing"></div>
+    <button onclick="startTyping()">Click for My Heart 💕</button>
+</section>
+
+<section id="photos">
+    <h1> Beautiful Moments 💗</h1>
+    <div class="slideshow">
+        <img id="slideImg" src="photo1.jpg" onclick="openImg(this.src)">
+    </div>
+    <button onclick="toggleMusic()">🎵 Play / Pause Song</button>
+
+</section>
+
+<section id="memories">
+<h1>Our Memories 💭</h1>
+<div class="memory-box">
+<p>🎂 27 January — The day you entered this world.</p>
+<p>💖 24 May 2025 — Jab humne date karna start kiya.</p>
+<p>💋 8 June 2025 — Our first kiss.</p>
+<p>💋 28 September 2025 — First French kiss.</p>
+<p>🏠 28 September 2025 — Pehli baar jab main tere ghar aaya.</p>
+<p>😅 Pehli baar jab tune mera bicep hold kiya tha.</p>
+<p>📚 Tuition ke baad milna bina wajah ❤️</p>
+<p>📱 “I like to be weird around you” wali reel 💕</p>
+<p><b>Tannu, tu meri sabse khoobsurat yaad hai 💗</b></p>
+</div>
+</section>
+
+<div id="lightbox" onclick="this.style.display='none'">
+    <img id="lightImg">
+</div>
+
+<audio id="bgSong" src="song.mp3" loop autoplay></audio>
+
+<script>
+function showSection(id){
+    document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+    document.body.classList.toggle("blur-active", id === "photos");
+}
+
+/* Typing text */
+const text = `My love Tannu 💗,
+
+27 January sirf ek date nahi hai,
+yeh woh din hai jab meri duniya ko
+apni sabse khoobsurat wajah mili tum.
+
+Tumhari hasi meri sabse badi strength hai,
+tumhara saath meri sabse badi blessing.
+Tum ho toh sab kuch theek lagta hai.
+
+Happy Birthday meri tannu bas mere rehna ✨
+Main har din sirf tumhara rehna chahta hoon 💗`;
+
+let t = 0;
+function startTyping(){
+    if(t < text.length){
+        typing.innerHTML += text.charAt(t++);
+        setTimeout(startTyping, 45);
+    }
+}
+
+/* Falling pink hearts, tulips & roses */
+setInterval(()=>{
+    const el = document.createElement("div");
+    el.className = "fall";
+
+    const items = ["💗", "🌷", "🌹"];
+    el.innerHTML = items[Math.floor(Math.random() * items.length)];
+
+    el.style.left = Math.random() * 100 + "vw";
+    el.style.fontSize = (22 + Math.random() * 12) + "px";
+
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),8000);
+},300);
+
+/* Slideshow autoplay */
+let current = 1;
+const total = 22;
+const img = document.getElementById("slideImg");
+
+setInterval(()=>{
+    current = current % total + 1;
+    img.style.opacity = 0;
+    setTimeout(()=>{
+        img.src = `photo${current}.jpg`;
+        img.style.opacity = 1;
+    },500);
+},2500);
+
+/* Music */
+const song = document.getElementById("bgSong");
+function toggleMusic(){
+    song.paused ? song.play() : song.pause();
+}
+
+/* Lightbox */
+function openImg(src){
+    lightImg.src = src;
+    lightbox.style.display = "block";
+}
+</script>
+
+</body>
+</html>
